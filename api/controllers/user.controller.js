@@ -5,6 +5,8 @@ exports.Register = async(req,res) => {
 
          const {name,email,password} = req.body;
 
+           console.log(name,email);
+
          let user = await User.findOne({email});
          if (user) {
               return res.status(400).json({
@@ -23,14 +25,20 @@ exports.Register = async(req,res) => {
                  }
          })
 
-         res
-          .status(201)
-          .json({
-                 success:true,
-                 message:"User registered successfully",
-                 user
-         });
+         const token = await user.generateToken();
 
+        res
+         .status(201)
+         .cookie("token",token,
+          {expires:new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+          httpOnly:true
+         })
+         .json({
+              success:true,
+              message:"User Registered successfully",
+              user,
+              token
+        })
        } catch (error) {
        	res
        	 .status(500)

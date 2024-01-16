@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
       minlength:[3,"Password must be at least 3 characters"],
       select:false,
  },
-  post:[
+  posts:[
       {
           type:mongoose.Schema.Types.ObjectId,
           ref:'Post',
