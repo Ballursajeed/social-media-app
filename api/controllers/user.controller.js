@@ -72,7 +72,10 @@ exports.Register = async(req,res) => {
 
         res
          .status(200)
-         .cookie("token",token)
+         .cookie("token",token,
+          {expires:new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+          httpOnly:true
+         })
          .json({
               success:true,
               message:"User logged successfully",
