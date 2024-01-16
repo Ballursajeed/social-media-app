@@ -1,5 +1,18 @@
 const express = require('express');
 const app = express();
-require('dotenv').config({path:"config.env"})
+
+ if (process.env.NODE_ENV !== 'production') {
+   require('dotenv').config({path:"config.env"})
+ }
+
+ //middlewares
+ app.use(express.json());
+ app.use(express.urlencoded({ extended:true }));
+
+ //importing routes
+ const postRoute = require("./routes/post.route.js")
+
+ //usind routes
+ app.use('/api/v1/post',postRoute);
 
 module.exports = app;
