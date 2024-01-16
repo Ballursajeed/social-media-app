@@ -1,6 +1,6 @@
 const User = require('../models/user.model.js');
 
-const Register = async(req,res) => {
+exports.Register = async(req,res) => {
        try {
 
          const {name,email,password} = req.body;
@@ -23,16 +23,71 @@ const Register = async(req,res) => {
                  }
          })
 
-         res.status(201).json({
-                   success:true,
-                   message:"User registered successfully",
-                   user
+         res
+          .status(201)
+          .json({
+                 success:true,
+                 message:"User registered successfully",
+                 user
          });
 
        } catch (error) {
-       	res.status(500).json({
+       	res
+       	 .status(500)
+       	 .json({
                 success:false,
                 message:error.message
        	})
        }
 }
+
+ exports.Login = async(req,res) => {
+      try {
+
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+             return res
+                       .status(400)
+                       .json({
+                            success:false,
+                            message:"User does not exist"
+                       });
+        }
+
+        const isMatch = await user.mathPassword(password);
+
+        if (!isMatch) {
+             return res
+                       .status(400)
+                       .json({
+                            success:false,
+                            message:"Incorrect password"
+                       });
+        }
+
+            const token = await user.generateToken();
+
+        res
+         .status(200)
+         .cookie("token",token)
+         .json({
+              success:true,
+              message:"User logged successfully",
+              user,
+              token
+        })
+
+      } catch (error) {
+               res
+                .status(500)
+                .json({
+                        success:false,
+                        message:error.message
+                })
+      }
+ }
+
+
