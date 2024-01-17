@@ -249,6 +249,7 @@ exports.deleteMyProfile = async(req,res) => {
           console.log(user);
           const posts = user.posts;
           const followers = user.followers;
+          const following = user.following;
           const userId = user._id;
 
           await User.findByIdAndDelete(user._id)
@@ -266,6 +267,15 @@ exports.deleteMyProfile = async(req,res) => {
             const index = follower.following.indexOf(userId);
             follower.following.splice(index, 1);
             await follower.save();
+          }
+
+           //removing users from following's followers
+          for (let i = 0; i<following.length; i++) {
+            const follows = await User.findById(following[i]);
+
+            const index = follows.followers.indexOf(userId);
+            follows.followers.splice(index, 1);
+            await follows.save();
           }
 
      res.status(200).json({
