@@ -10,7 +10,7 @@ exports.createPost = async(req,res) => {
            public_id:'req.body.public_id',
            url:"req.body.url"
         },
-        owner:req.body._id
+        owner:req.user._id
     }
 
      const post = await Post.create(newPostData);

@@ -133,7 +133,7 @@ exports.getPostOfFollowing = async(req,res) => {
 
         const posts = await Post.find({
            owner: {
-               &in: user.following
+               $in: user.following
            	 }
         })
 
