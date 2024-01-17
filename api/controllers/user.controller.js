@@ -112,6 +112,23 @@ exports.Register = async(req,res) => {
                            })
                    }
 
+
+                 if (loggedInUser.following.includes(userToFollow._id)) {
+                 	         const indexFollowing = loggedInUser.following.indexOf(userToFollow._id);
+                           loggedInUser.following.splice(indexFollowing,1);
+
+                           const indexFollower = userToFollow.followers.indexOf(loggedInUser._id);
+                           userToFollow.followers.splice(indexFollowing,1);
+
+                           await loggedInUser.save();
+                           await userToFollow.save();
+
+                       res.status(200).json({
+                        success:true,
+                        message:"User Unfollowed"
+                })
+
+                 } else {
                 loggedInUser.following.push(userToFollow._id);
                 userToFollow.followers.push(loggedInUser._id);
 
@@ -122,6 +139,7 @@ exports.Register = async(req,res) => {
                         success:true,
                         message:"User followed"
                 })
+                 }
 
               } catch (error) {
                        res.status(500).json({
