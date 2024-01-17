@@ -5,6 +5,8 @@ exports.Register = async(req,res) => {
 
          const {name,email,password} = req.body;
 
+           console.log(name,email);
+
          let user = await User.findOne({email});
          if (user) {
               return res.status(400).json({
@@ -97,6 +99,38 @@ exports.Register = async(req,res) => {
                         message:error.message
                 })
       }
+ }
+
+ exports.followingUser = async(req,res) => {
+              try {
+
+                   const userToFollow = await User.findById(req.params.id);
+                   const loggedInUser = await User.findById(req.user._id);
+
+                   if (!userToFollow) {
+                           return res.status(404).json({
+                                success:false,
+                                message:"User not found!"
+                           })
+                   }
+
+                loggedInUser.following.push(userToFollow._id);
+                userToFollow.followers.push(loggedInUser._id);
+
+                await loggedInUser.save();
+                await userToFollow.save();
+
+                res.status(200).json({
+                        success:true,
+                        message:"User followed"
+                })
+
+              } catch (error) {
+                       res.status(500).json({
+                            success:false,
+                            message:error.message
+                       })
+              }
  }
 
 
