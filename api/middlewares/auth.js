@@ -5,7 +5,7 @@ exports.isAuthenticated = async(req,res,next) => {
 
   try {
 
-      // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE2YWEwN2U2YjNjNmQwOGZkMjc2OGUiLCJpYXQiOjE3MDU0OTI4Mzd9.0xliE2U3u79-z0ADRMJwQtemrhiXyHAEWsSbkI7JytE'
+       //const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE3YmVlYjBiYzAwMThmMDhhMTMxZWMiLCJpYXQiOjE3MDU1MDIwMDB9.B5jUOV1vjoc3WjEVSuypPkgtXMQHf28R9VBFSgyGzv0"
        const { token } = req.coookies;
         if (!token) {
               return res
