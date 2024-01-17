@@ -99,7 +99,7 @@ exports.Register = async(req,res) => {
       }
  }
 
- exports.followingUser = async(req,res) => {
+ exports.followingUser = async(req,res) => { //follow and unfollow
               try {
 
                    const userToFollow = await User.findById(req.params.id);
