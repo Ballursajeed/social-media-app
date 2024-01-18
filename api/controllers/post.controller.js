@@ -231,10 +231,66 @@ exports.addComment = async(req,res) => {
             message:"Comment Added"
        });
       }
-
-
-
      } catch (error) {
+             res.status(500).json({
+             success:false,
+             message:error.message
+     })
+     }
+}
+
+exports.deleteComment = async(req,res) => {
+       try {
+
+         const post = await Post.findById(req.params.id);
+
+         if (!post) {
+             return res.status(404).json({
+                       success:false,
+                       message:"Post not found"
+             })
+        }
+
+         //checking if owner wants to delete
+        if (post.owner.toString() === req.user._id.toString()) {
+
+         if (req.body.commentId === undefined) {
+                return res.status(400).json({
+                     success:false,
+                     message:"Comment is required"
+                })
+         }
+
+           post.comments?.forEach((item,index) => {
+            if (item._id.toString() === req.body.commentId.toString()) {
+                 return post.comments.splice(index,1);
+            }
+         });
+
+         await post.save();
+
+        return res.status(200).json({
+                success:true,
+                message:"Selected Comment Deleted"
+         })
+
+        } else {
+
+           post.comments?.forEach((item,index) => {
+            if (item.user.toString() === req.user._id.toString()) {
+                 return post.comments.splice(index,1);
+            }
+             });
+
+     await post.save();
+
+    return res.status(200).json({
+          success:true,
+          message:"Your Comment has Deleted"
+     })
+        }
+
+       } catch (error) {
              res.status(500).json({
              success:false,
              message:error.message
