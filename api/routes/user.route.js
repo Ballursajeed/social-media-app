@@ -8,7 +8,9 @@ const { Register,
         deleteMyProfile,
         myProfile,
         getUserProfile,
-        getAllUsers } = require('../controllers/user.controller.js')
+        getAllUsers,
+        forgetPassword,
+        resetPassword } = require('../controllers/user.controller.js')
 const { isAuthenticated } = require('../middlewares/auth.js')
 
 const router = express.Router();
@@ -23,5 +25,7 @@ const router = express.Router();
  router.route('/delete/me').delete(isAuthenticated,deleteMyProfile);
  router.route('/user/:id').get(isAuthenticated,getUserProfile);
  router.route('/users').get(isAuthenticated,getAllUsers);
+ router.route('/forgot/password').post(forgetPassword);
+ router.route('/password/reset/:token').put(resetPassword);
 
 module.exports = router;

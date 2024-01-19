@@ -15,6 +15,6 @@ const router = express.Router();
  router.route('/delete/:id').delete(isAuthenticated,deletePost);
  router.route('/update/:id').put(isAuthenticated,updatePost);
  router.route('/').get(isAuthenticated,getPostOfFollowing);
- router.route('/comment/:id').put(isAuthenticated,addComment).delete(isAuthenticated,deleteComment)
+ router.route('/comment/:id').put(isAuthenticated,addComment).delete(isAuthenticated,deleteComment);
 
 module.exports = router;

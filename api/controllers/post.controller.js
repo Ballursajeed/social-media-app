@@ -257,7 +257,7 @@ exports.deleteComment = async(req,res) => {
          if (req.body.commentId === undefined) {
                 return res.status(400).json({
                      success:false,
-                     message:"Comment is required"
+                     message:"Comment Id is required"
                 })
          }
 
