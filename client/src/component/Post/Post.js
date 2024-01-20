@@ -11,6 +11,9 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { likePost } from "../../Actions/Post"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Post  = ({
    postId,
@@ -27,15 +30,38 @@ const Post  = ({
 
  const [liked,setLiked] = React.useState(false);
 
+ const {error,message} = useSelector((state) => state.like);
+
  const dispatch = useDispatch()
 
  const handleLike = () => {
       setLiked(!liked);
-      dispatch(likePost(postId))
+      dispatch(likePost(postId));
+
+ };
+
+ React.useEffect(() => {
+
+ if (error) {
+     toast.error(error)
  }
+  if (message) {
+  toast.success(message, {
+    position: "top",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+  }
+
+ },[error,message])
 
  return(
      <>
+    <ToastContainer />
       <div className='post'>
         <div className='postHeader'>
             {isAccount ? <Button>

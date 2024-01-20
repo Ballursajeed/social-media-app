@@ -15,7 +15,7 @@ export const likePost = (id) => async(dispatch) => {
 
             dispatch({
                type:"likeSuccess",
-               payload:data.users
+               payload:data.message
             })
 
       } catch (error) {

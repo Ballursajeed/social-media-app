@@ -8,7 +8,7 @@ export const likePost = (id) => async(dispatch) => {
             });
 
             const { data } = await axios.get(`http://localhost:8000/api/v1/post/${id}`, {
-      withCredentials: true, // Include credentials (cookies) in the request
+      withCredentials: true,
     });
 
         console.log(data);
