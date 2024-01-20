@@ -9,6 +9,8 @@ import {
   ChatBubbleOutline,
   DeleteOutline,
 } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { likePost } from "../../Actions/Post"
 
 const Post  = ({
    postId,
@@ -25,8 +27,11 @@ const Post  = ({
 
  const [liked,setLiked] = React.useState(false);
 
+ const dispatch = useDispatch()
+
  const handleLike = () => {
       setLiked(!liked);
+      dispatch(likePost(postId))
  }
 
  return(
