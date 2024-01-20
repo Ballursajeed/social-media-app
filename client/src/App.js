@@ -1,14 +1,16 @@
 import './App.css';
 import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
-import Header from "./component/Header/Header"
-import Login from "./component/Login/Login"
+import Header from "./component/Header/Header";
+import Login from "./component/Login/Login";
+import Home from "./component/Home/Home";
 import { useEffect } from "react";
 import { loadUser } from "./Actions/User"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
 
  const dispatch = useDispatch();
+ const { isAuthenticated } = useSelector((state) => state.user);
 
  useEffect(() => {
       dispatch(loadUser());
@@ -16,9 +18,9 @@ function App() {
 
   return (
   <Router>
-    <Header />
+  {isAuthenticated && <Header />}
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
     </Routes>
   </Router>
   );

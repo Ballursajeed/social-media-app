@@ -3,12 +3,13 @@ import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import Header from "./component/Header/Header"
 import Login from "./component/Login/Login"
 import { useEffect } from "react";
-import { loadUser } from "./Action/User"
-import { useDispatch } from "react-redux";
+import { loadUser } from "./Actions/User"
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
 
  const dispatch = useDispatch();
+ const { isAuthenticated } = useSelector((state) => state.user);
 
  useEffect(() => {
       dispatch(loadUser());
@@ -16,7 +17,7 @@ function App() {
 
   return (
   <Router>
-    <Header />
+  {isAuthenticated && <Header />}
     <Routes>
       <Route path="/" element={<Login />} />
     </Routes>

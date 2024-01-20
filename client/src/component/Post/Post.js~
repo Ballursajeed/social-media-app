@@ -1,0 +1,35 @@
+import React from "react";
+import "./Post.css"
+import { Avatar }  from "@mui/material";
+
+const Post  = ({
+   postId,
+   caption,
+   postImage,
+   likes = [],
+   comments = [],
+   ownerImage,
+   ownerName,
+   ownerId,
+   isDelete = false,
+   isAccount = false,
+}) => {
+ return(
+     <>
+      <div className='post'>
+        <div className='postHeader'></div>
+
+        <img src={postImage} alt='post' />
+
+        <div className='postDetails'>
+           <Avatar src={ownerImage} alt='User' sx={{
+           	height:"3vmax",
+            width:"3vmax",
+           	}}/>
+        </div>
+      </div>
+     </>
+ )
+}
+
+export default Post;
