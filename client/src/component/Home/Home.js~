@@ -6,10 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFollowingPost,getAllUsers } from "../../Actions/User";
 import Loader from "../Loader/Loader"
 import { Typography }  from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
 
  const dispatch = useDispatch();
+
+ const {error:likeError,message} = useSelector((state) => state.like);
 
  const { loading,posts,error } = useSelector(state => state.postOfFollowing)
 
@@ -20,10 +24,42 @@ const Home = () => {
  dispatch(getFollowingPost())
  dispatch(getAllUsers())
 
- },[])
+ });
+
+
+
+  React.useEffect(() => {
+
+ if (error) {
+     toast.error(error);
+     dispatch({
+       type:"clearError"
+     })
+ }
+
+if (likeError) {
+     toast.error(likeError);
+     dispatch({
+       type:"clearError"
+     })
+ }
+
+  if (message) {
+  toast.success(message);
+  dispatch({
+       type:"clearMessage"
+  })
+  }
+
+ },[error,message])
+
+
 
  return(
-      loading === true || usersLoading === true ? <Loader /> : (
+ <>
+      <ToastContainer />
+      {
+          loading === true || usersLoading === true ? <Loader /> : (
       <div className='home'>
        <div className='homeleft'>
           {
@@ -46,7 +82,7 @@ const Home = () => {
          {
             users && users.length > 0 ? users.map((user) => ((
          <User
-             key={user._id}
+              key={user._id}
               userId={user._id}
               name={user.name}
               avatar={user.avatar.url}
@@ -56,6 +92,9 @@ const Home = () => {
        </div>
    </div>
       )
+      }
+
+      </>
  )
 }
 

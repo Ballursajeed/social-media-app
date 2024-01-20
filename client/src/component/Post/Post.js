@@ -9,11 +9,8 @@ import {
   ChatBubbleOutline,
   DeleteOutline,
 } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { likePost } from "../../Actions/Post"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 const Post  = ({
    postId,
@@ -30,9 +27,8 @@ const Post  = ({
 
  const [liked,setLiked] = React.useState(false);
 
- const {error,message} = useSelector((state) => state.like);
-
  const dispatch = useDispatch()
+ const {user} = useSelector(state => state.user);
 
  const handleLike = () => {
       setLiked(!liked);
@@ -40,28 +36,16 @@ const Post  = ({
 
  };
 
- React.useEffect(() => {
-
- if (error) {
-     toast.error(error)
- }
-  if (message) {
-  toast.success(message, {
-    position: "top",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
-  }
-
- },[error,message])
+React.useEffect(() => {
+     likes.forEach(item => {
+     if (item._id === user._id) {
+         setLiked(true);
+     }
+})
+},[likes])
 
  return(
      <>
-    <ToastContainer />
       <div className='post'>
         <div className='postHeader'>
             {isAccount ? <Button>
@@ -93,7 +77,7 @@ const Post  = ({
           cursor: "Pointer",
           margin: "1vmax 2vmax",
         }}>
-            <Typography>5 Likes</Typography>
+            <Typography>{likes.length} Likes</Typography>
         </button>
         <div className='postFooter'>
             <Button onClick={handleLike}>
