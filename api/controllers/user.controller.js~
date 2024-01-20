@@ -79,6 +79,8 @@ exports.Register = async(req,res) => {
 
             const token = await user.generateToken();
 
+           console.log("Login successfully")
+
         res
          .status(200)
          .cookie("token",token,
@@ -376,7 +378,7 @@ exports.forgetPassword = async(req,res) => {
 
           await user.save();
 
-          const resetUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetPasswordToken}`;
+          const resetUrl = `${req.protocol}://${req.get("host")}/api/v1/user/password/reset/${resetPasswordToken}`;
           const message = `Reset your password by clicking on the link: ${resetUrl}`;
 
           try {

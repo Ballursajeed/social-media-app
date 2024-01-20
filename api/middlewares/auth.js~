@@ -5,8 +5,9 @@ exports.isAuthenticated = async(req,res,next) => {
 
   try {
 
-       const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE5ZjhjYmU4MmU3ZjkxZmQ5ODk5ZWUiLCJpYXQiOjE3MDU2Mzg2NDF9.hyDnQ6QwmyGzc6w90CsuybC_oK5pyAQ_sr6_Esz7pQE";
-       //const { token } = req.coookies;
+       console.log(req);
+       const { token } = req.cookies;
+
         if (!token) {
               return res
              .status(401)

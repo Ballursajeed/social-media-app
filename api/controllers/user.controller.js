@@ -79,12 +79,11 @@ exports.Register = async(req,res) => {
 
             const token = await user.generateToken();
 
+           console.log("Login successfully")
+
         res
+         .cookie('token',token,{sameSite:'none',secure:true})
          .status(200)
-         .cookie("token",token,
-          {expires:new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-          httpOnly:true
-         })
          .json({
               success:true,
               message:"User logged successfully",
