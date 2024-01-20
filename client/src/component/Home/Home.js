@@ -8,7 +8,10 @@ const Home = () => {
   <>
    <div className='home'>
        <div className='homeleft'>
-          <Post />
+          <Post postImage={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaN7t4nFvg7uDQtFM7hSM3YlKvukzpz5bdAA&usqp=CAU"}
+             ownerName={'Tony stark'}
+             caption={"This is sample post"}
+          />
        </div>
        <div className='homeright'>
          <User
