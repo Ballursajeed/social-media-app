@@ -1,6 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+  isAuthenticated: false,
+};
 
 export const userReducer = createReducer(initialState, (builder) => {
   builder
@@ -42,5 +44,26 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.payload;
       state.isAuthenticated = false;
+    })
+    .addCase("clearError",(state) => {
+           state.error = null;
     });
 });
+
+export const postOfFollowingReducer = createReducer(initialState,(builder) => {
+ builder
+ .addCase("PostOfFollowingRequest",(state) => {
+        state.loading = true;
+ })
+ .addCase("PostOfFollowingSuccess",(state,action) => {
+            state.loading = false;
+            state.posts = action.payload;
+ })
+ .addCase("PostOfFollowingFailure",(state,action) => {
+           state.loading = false;
+           state.error = action.payload;
+ })
+ .addCase("clearError",(state) => {
+           state.error = null;
+ })
+})

@@ -15,8 +15,6 @@ export const loginUser = (email,password) => async(dispatch) => {
     withCredentials: true,
   });
 
-     console.log(data);
-
      dispatch({
         type:"LoginSuccess",
         payload:data.user,
@@ -55,6 +53,32 @@ export const loadUser = () => async(dispatch) => {
   } catch (error) {
          dispatch({
           type:"LoadUserFailure",
+        payload: {
+        message: error.message,
+        status: error.response ? error.response.status : null,
+      },
+   })
+  }
+}
+
+export const getFollowingPost = () => async(dispatch) => {
+      try {
+
+            dispatch({
+               type:"PostOfFollowingRequest",
+            });
+
+            const { data } = await axios.get("http://localhost:8000/api/v1/post", {
+      withCredentials: true, // Include credentials (cookies) in the request
+    });
+            dispatch({
+               type:"PostOfFollowingSuccess",
+               payload:data.posts
+            })
+
+      } catch (error) {
+         dispatch({
+          type:"PostOfFollowingFailure",
         payload: {
         message: error.message,
         status: error.response ? error.response.status : null,
