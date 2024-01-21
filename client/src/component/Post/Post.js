@@ -11,8 +11,9 @@ import {
   DeleteOutline,
 } from "@mui/icons-material";
 import { useDispatch,useSelector } from "react-redux";
-import { likePost } from "../../Actions/Post"
+import { likePost, commentPost } from "../../Actions/Post"
 import { getFollowingPost } from "../../Actions/User";
+import CommentCard from "../CommentCard/CommentCard";
 
 const Post  = ({
    postId,
@@ -30,6 +31,9 @@ const Post  = ({
  const [liked,setLiked] = React.useState(false);
  const [likesUser,setLikesUser] = React.useState(false);
 
+ const [commentValue,setCommentValue] = React.useState("");
+ const [commentToggle,setCommentToggle] = React.useState(false);
+
  const dispatch = useDispatch()
  const {user} = useSelector(state => state.user);
 
@@ -46,6 +50,19 @@ const Post  = ({
      }
 
  };
+
+ const addCommentHandler = async(e) => {
+ 	  e.preventDefault();
+     await dispatch(commentPost(postId,commentValue));
+
+    if (isAccount) {
+
+     console.log("my post")
+
+     } else {
+        dispatch(getFollowingPost());
+     }
+ }
 
 React.useEffect(() => {
      likes.forEach(item => {
@@ -99,7 +116,7 @@ React.useEffect(() => {
                  liked ? <Favorite style={{color:"red"}}/> :  <FavoriteBorder />
               }
             </Button>
-             <Button>
+             <Button onClick={() => setCommentToggle(!commentToggle)}>
                <ChatBubbleOutline />
             </Button>
                {
@@ -123,6 +140,33 @@ React.useEffect(() => {
               />
                     ))
                }
+            </div>
+     </Dialog>
+
+<Dialog open={commentToggle} onClose={() => setCommentToggle(!commentToggle)} >
+            <div className='DialogBox'>
+               <Typography variant="h4">Comments</Typography>
+
+              <form className='commentForm' onSubmit={addCommentHandler}>
+                  <input
+                   type="text"
+                   value={commentValue}
+                   onChange={(e) => setCommentValue(e.target.value)}
+                   placeholder="Comment here"
+                   required
+                   />
+                   <Button type="submit" variant="contained">Add</Button>
+              </form>
+              {
+                  comments.length > 0 ? comments.map(comment => (
+                              <CommentCard  userId={comment.user._id}
+                                            name={comment.user.name}
+                                            avatar={comment.user.avatar.url}
+                                            comment={comment.comment}
+                                            commentId={comment._id}
+                                            pastId      />
+                  )): <Typography>No Comments Yet</Typography>
+              }
             </div>
      </Dialog>
 

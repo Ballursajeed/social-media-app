@@ -1,4 +1,4 @@
-import { createReducer } from "@redux/toolkit";
+import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {}
 
