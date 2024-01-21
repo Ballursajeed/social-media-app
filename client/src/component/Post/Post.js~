@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 import { useDispatch,useSelector } from "react-redux";
 import { likePost } from "../../Actions/Post"
+import { getFollowingPost } from "../../Actions/User";
 
 const Post  = ({
    postId,
@@ -30,9 +31,13 @@ const Post  = ({
  const dispatch = useDispatch()
  const {user} = useSelector(state => state.user);
 
- const handleLike = () => {
+ const handleLike = async() => {
       setLiked(!liked);
-      dispatch(likePost(postId));
+     await dispatch(likePost(postId));
+
+     if (isAccount) {
+      dispatch(getFollowingPost());
+     }
 
  };
 
@@ -77,7 +82,7 @@ React.useEffect(() => {
           cursor: "Pointer",
           margin: "1vmax 2vmax",
         }}>
-            <Typography>5 Likes</Typography>
+            <Typography>{likes.length} Likes</Typography>
         </button>
         <div className='postFooter'>
             <Button onClick={handleLike}>

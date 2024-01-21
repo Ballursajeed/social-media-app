@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 import { useDispatch,useSelector } from "react-redux";
 import { likePost } from "../../Actions/Post"
+import { getFollowingPost } from "../../Actions/User";
 
 const Post  = ({
    postId,
@@ -30,9 +31,17 @@ const Post  = ({
  const dispatch = useDispatch()
  const {user} = useSelector(state => state.user);
 
- const handleLike = () => {
+ const handleLike = async() => {
       setLiked(!liked);
-      dispatch(likePost(postId));
+     await dispatch(likePost(postId));
+
+     if (isAccount) {
+
+     console.log("my post")
+
+     } else {
+        dispatch(getFollowingPost());
+     }
 
  };
 

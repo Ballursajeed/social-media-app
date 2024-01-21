@@ -51,7 +51,7 @@ if (likeError) {
   })
   }
 
- },[error,message])
+ },[error,message,likeError,dispatch])
 
 
 
