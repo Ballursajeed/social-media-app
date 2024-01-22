@@ -82,11 +82,8 @@ exports.Register = async(req,res) => {
            console.log("Login successfully")
 
         res
+         .cookie('token',token,{sameSite:'none',secure:true})
          .status(200)
-         .cookie("token",token,
-          {expires:new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-          httpOnly:true
-         })
          .json({
               success:true,
               message:"User logged successfully",
@@ -361,6 +358,31 @@ exports.getAllUsers = async(req,res) => {
               })
         }
 }
+
+ exports.getMyPosts = async(req,res) => {
+        try {
+
+            const user = await User.findById(req.user.id);
+
+           const posts = [];
+
+           for (let i=0;i<user.posts.length;i++) {
+              const post = await Post.findById(user.posts[i]).populate("likes comments.user");
+              posts.push(post);
+           }
+
+            res.status(200).json({
+                    success:true,
+                    posts
+            })
+
+        } catch (error) {
+               res.status(500).json({
+                    success:false,
+                    message:error.message
+              })
+        }
+
 
 exports.forgetPassword = async(req,res) => {
       try {
