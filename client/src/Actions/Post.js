@@ -63,3 +63,32 @@ export const commentPost = (id,comment) => async(dispatch) => {
    })
   }
 }
+export const deleteComment = (id,commentId) => async(dispatch) => {
+      try {
+
+            dispatch({
+               type:"deleteCommentRequest",
+            });
+
+     const { data } = await axios.delete(`http://localhost:8000/api/v1/post/comment/${id}`, {
+      withCredentials: true,
+      data: { commentId }, // Assuming commentId should be sent in the request body
+    });
+
+        console.log(data);
+
+            dispatch({
+               type:"deleteCommentSuccess",
+               payload:data.message
+            })
+
+      } catch (error) {
+         dispatch({
+          type:"deleteCommentFailure",
+        payload: {
+        message: error.message,
+        status: error.response ? error.response.status : null,
+      },
+   })
+  }
+}

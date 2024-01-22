@@ -26,6 +26,17 @@ export const likeReducer = createReducer(initialState,(builder) => {
                state.loading = false;
                state.error = action.payload;
      })
+    .addCase("deleteCommentRequest", (state) => {
+              state.loading = true
+     })
+     .addCase("deleteCommentSuccess", (state,action) => {
+               state.loading = false;
+               state.message = action.payload;
+     })
+     .addCase("deleteCommentFailure", (state,action) => {
+               state.loading = false;
+               state.error = action.payload;
+     })
      .addCase("clearError",(state) => {
              state.error = null
      })

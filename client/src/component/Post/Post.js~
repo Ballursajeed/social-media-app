@@ -13,6 +13,7 @@ import {
 import { useDispatch,useSelector } from "react-redux";
 import { likePost, commentPost } from "../../Actions/Post"
 import { getFollowingPost } from "../../Actions/User";
+import CommentCard from "../CommentCard/CommentCard";
 
 const Post  = ({
    postId,
@@ -163,7 +164,8 @@ React.useEffect(() => {
                                             avatar={comment.user.avatar.url}
                                             comment={comment.comment}
                                             commentId={comment._id}
-                                            pastId      />
+                                            pastId={postId}
+                                            isAccount={isAccount}    />
                   )): <Typography>No Comments Yet</Typography>
               }
             </div>

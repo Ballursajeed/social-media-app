@@ -3,6 +3,8 @@ import "./CommentCard.css"
 import { Link } from "react-router-dom";
 import { Typography, Button}  from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteComment } from "../../Actions/Post";
 
 const CommentCard = ({
  userId,
@@ -10,8 +12,19 @@ const CommentCard = ({
  avatar,
  comment,
  commentId,
- pastId,
+ postId,
+ isAccount,
 }) => {
+
+  const { user } = useSelector(state => state.user);
+
+ const dispatch = useDispatch();
+
+ const deleteCommentHandler = () => {
+           console.log("Delete comment");
+           dispatch(deleteComment(postId,commentId))
+ }
+
  return(
   <>
    <div className='commentUser'>
@@ -22,9 +35,16 @@ const CommentCard = ({
       <Typography>
          {comment}
       </Typography>
-      <Button>
-        <Delete />
-      </Button>
+
+           {
+               isAccount ? ( <Button onClick={deleteCommentHandler}>
+                                 <Delete />
+                             </Button> ) : userId === user._id ? (
+                             <Button onClick={deleteCommentHandler}>
+                                 <Delete />
+                             </Button> ) : null
+           }
+
    </div>
   </>
  )

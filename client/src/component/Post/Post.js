@@ -164,7 +164,8 @@ React.useEffect(() => {
                                             avatar={comment.user.avatar.url}
                                             comment={comment.comment}
                                             commentId={comment._id}
-                                            pastId      />
+                                            postId={postId}
+                                            isAccount={isAccount}    />
                   )): <Typography>No Comments Yet</Typography>
               }
             </div>
