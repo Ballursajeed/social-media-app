@@ -159,7 +159,8 @@ React.useEffect(() => {
               </form>
               {
                   comments.length > 0 ? comments.map(comment => (
-                              <CommentCard  userId={comment.user._id}
+                              <CommentCard  key={comment._id}
+                                            userId={comment.user._id}
                                             name={comment.user.name}
                                             avatar={comment.user.avatar.url}
                                             comment={comment.comment}

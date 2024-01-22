@@ -44,3 +44,24 @@ export const likeReducer = createReducer(initialState,(builder) => {
             state.message = null
      })
 })
+
+export const myPostReducer = createReducer(initialState,(builder) => {
+   builder
+    .addCase("myPostsRequest",(state) => {
+         state.loading = true;
+    })
+    .addCase("myPostsSuccess",(state,action) => {
+               state.loading = false;
+               state.posts = action.payload;
+    })
+    .addCase("myPostsFailure",(state,action) => {
+              state.loading = false;
+               state.error = action.payload;
+    })
+    .addCase("clearError",(state) => {
+             state.error = null
+     })
+    .addCase("clearMessage",(state) => {
+            state.message = null
+     })
+})

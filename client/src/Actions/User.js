@@ -87,6 +87,34 @@ export const getFollowingPost = () => async(dispatch) => {
   }
 }
 
+export const getMyPosts = () => async(dispatch) => {
+      try {
+
+            dispatch({
+               type:"myPostsRequest",
+            });
+
+            const { data } = await axios.get("http://localhost:8000/api/v1/user/my/posts", {
+      withCredentials: true, // Include credentials (cookies) in the request
+    });
+
+    console.log(data)
+            dispatch({
+               type:"myPostsSuccess",
+               payload:data.posts
+            })
+
+      } catch (error) {
+         dispatch({
+          type:"myPostsFailure",
+        payload: {
+        message: error.message,
+        status: error.response ? error.response.status : null,
+      },
+   })
+  }
+}
+
 export const getAllUsers = () => async(dispatch) => {
       try {
 
