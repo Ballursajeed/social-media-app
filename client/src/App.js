@@ -4,6 +4,7 @@ import Header from "./component/Header/Header";
 import Login from "./component/Login/Login";
 import Home from "./component/Home/Home";
 import Account from "./component/Account/Account";
+import NewPost from "./component/NewPost/NewPost";
 import { useEffect } from "react";
 import { loadUser } from "./Actions/User"
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +24,7 @@ function App() {
     <Routes>
       <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
       <Route path="/account" element={isAuthenticated ? <Account /> : <Login />} />
+      <Route path="/newpost" element={isAuthenticated ? <NewPost /> : <Login />} />
     </Routes>
   </Router>
   );

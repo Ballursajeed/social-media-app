@@ -97,6 +97,8 @@ export const getMyPosts = () => async(dispatch) => {
             const { data } = await axios.get("http://localhost:8000/api/v1/user/my/posts", {
       withCredentials: true, // Include credentials (cookies) in the request
     });
+
+    console.log(data)
             dispatch({
                type:"myPostsSuccess",
                payload:data.posts

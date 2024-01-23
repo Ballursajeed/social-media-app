@@ -1,7 +1,7 @@
 import React from "react";
 import "./Account.css"
 import { useDispatch,useSelector } from "react-redux";
-import { getMyPosts } from "../../Actions/User";
+import { getMyPosts, logoutUser } from "../../Actions/User";
 import Loader from "../Loader/Loader"
 import Post from "../Post/Post";
 import { Typography, Avatar, Button, Dialog }  from "@mui/material";
@@ -20,6 +20,11 @@ const Account = () => {
 
  const [followersToggle,setFollowersToggle] = React.useState(false);
  const [followingToggle,setFollowingToggle] = React.useState(false);
+
+ const logoutHandler = () => {
+       dispatch(logoutUser());
+       toast.success("Logged out successfully")
+ }
 
  React.useEffect(() => {
      dispatch(getMyPosts())
@@ -93,7 +98,7 @@ const Account = () => {
               <Typography>Post</Typography>
               <Typography>{user.posts.length}</Typography>
             </div>
-            <Button variant="contained">Logout</Button>
+            <Button variant="contained" onClick={logoutHandler}>Logout</Button>
 
             <Link to='/update/profile'>Edit Profile</Link>
             <Link to='/update/password'>Change Password</Link>
@@ -116,7 +121,7 @@ const Account = () => {
               name={follower.name}
               avatar={follower.avatar?.url}
               />
-                    ))  : <Typography>You Have no followers</Typography>
+                    ))  : <Typography style={{ margin: "2vmax" }}>You Have no followers</Typography>
                 }
 
             </div>
@@ -133,7 +138,7 @@ const Account = () => {
               name={follow.name}
               avatar={follow.avatar?.url}
               />
-                    ))  : <Typography>You`re not following anyone </Typography>
+                    ))  : <Typography style={{ margin: "2vmax" }}>You`re not following anyone </Typography>
                 }
 
             </div>

@@ -32,6 +32,38 @@ export const loginUser = (email,password) => async(dispatch) => {
   }
 }
 
+export const logoutUser = () => async(dispatch) => {
+  try {
+
+
+   dispatch({
+        type:"LogoutUserRequest"
+   })
+
+     const {data} = await axios.get("http://localhost:8000/api/v1/user/logout", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  });
+
+     dispatch({
+        type:"LogoutUsersuccess",
+        payload:data.user,
+   })
+
+
+  } catch (error) {
+         dispatch({
+          type:"LogoutUserFailure",
+        payload: {
+        message: error.message,
+        status: error.response ? error.response.status : null,
+      },
+   })
+  }
+}
+
 export const loadUser = () => async(dispatch) => {
   try {
 

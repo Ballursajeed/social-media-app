@@ -55,7 +55,7 @@ exports.Register = async(req,res) => {
 
         const { email, password } = req.body;
 
-        const user = await User.findOne({ email }).select("+password");
+        const user = await User.findOne({ email }).select("+password").populate("posts following followers");
 
         if (!user) {
              return res
